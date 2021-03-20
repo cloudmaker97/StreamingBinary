@@ -1,6 +1,6 @@
 # StreamingBin
-* Useful data exports for streaming implementation
-* Smart data-scraping for all-in-one "Streaming Suite"
+* Useful data exports for my Twitch Streaming needs
+* Completely without any external library / framework
 
 # Installation and usage
 * Clone this repository
