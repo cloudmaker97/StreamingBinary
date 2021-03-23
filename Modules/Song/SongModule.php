@@ -16,17 +16,13 @@ class SongModule extends Module
         $this->SetOutputFolder("Song");
         $this->SetPlannedSkipCount(5);
 
-        $this->SetSettings([
-            "API_Key" => $args["config"]->LastFM->ClientSecret,
-            "Username" => $args["config"]->LastFM->Username
-        ]);
-        $this->UpdateSongInformation();
+        $this->UpdateSongInformation($args);
     }
 
     function OnIntervalUpdate($args): void
     {
         if($this->GetIsInactiveSkip()) {
-            $this->UpdateSongInformation();
+            $this->UpdateSongInformation($args);
         }
     }
 
@@ -39,11 +35,11 @@ class SongModule extends Module
         $this->WriteFile("current_song.json", json_encode($SongData));
     }
 
-    private function UpdateSongInformation(): void
+    private function UpdateSongInformation($args): void
     {
         $RequestUrl = sprintf("https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&limit=1&extended=1&user=%s&api_key=%s&format=json",
-            $this->GetSettingsValue("Username"),
-            $this->GetSettingsValue("API_Key"),
+            $args["config"]->LastFM->Username,
+            $args["config"]->LastFM->ClientSecret,
         );
         $RequestData = file_get_contents($RequestUrl);
         $RequestData = json_decode($RequestData)->recenttracks->track[0];

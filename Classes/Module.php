@@ -10,8 +10,7 @@ use Interfaces\IModule;
 abstract class Module implements IModule
 {
     private string $_Name;
-    private array $_Settings;
-    private $_OutputFolder = "";
+    private string $_OutputFolder = "";
     private int $_PlannedSkipCount = 0;
     private int $_AlreadySkippedCount = 0;
 
@@ -68,7 +67,6 @@ abstract class Module implements IModule
             $this->ResetAlreadySkippedCount();
             return true;
         } else {
-            OutputMessage::create(sprintf("Überspringen des Moduls wurde erzwungen: %s", $this->GetModuleName()));
             $this->IncrementAlreadySkippedCount();
             return false;
         }
@@ -102,42 +100,6 @@ abstract class Module implements IModule
      */
     public function GetModuleName(): string {
         return $this->_Name;
-    }
-
-    /**
-     * Sets all module settings (any maybe overwrites)
-     * @param array $Settings Set all module Settings
-     */
-    public function SetSettings(array $Settings): void
-    {
-        $this->_Settings = $Settings;
-    }
-
-    /**
-     * Get all module settings
-     * @return array Get all module Settings
-     */
-    public function GetSettings(): array
-    {
-        return $this->_Settings;
-    }
-
-    /**
-     * @param $Key string Key of the Setting
-     * @param $Value mixed Value of the Setting
-     */
-    public function SetSettingsValue(string $Key, $Value)
-    {
-        $this->_Settings[$Key] = $Value;
-    }
-
-    /**
-     * @param $Key string Requested Key of the Setting
-     * @return mixed Settings Value
-     */
-    public function GetSettingsValue(string $Key)
-    {
-        return $this->_Settings[$Key];
     }
 
     /**
