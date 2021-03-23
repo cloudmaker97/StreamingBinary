@@ -29,10 +29,12 @@ class TwitchModule extends Module {
 
         $UserID = $HelixAPI->GetUserIDByName($args["config"]->Twitch->Username);
         $LatestFollower = $HelixAPI->GetUserLatestFollowerNameByUserID($UserID);
+        $FollowerCount = $HelixAPI->GetUserFollowerCountByUserID($UserID);
         $StreamInformation = $HelixAPI->GetStreamInformationByUserID($UserID);
         $ViewerCount = $HelixAPI->GetStreamViewerCountByUserID($UserID);
 
         $this->WriteFile("latest_follower.txt", $LatestFollower);
+        $this->WriteFile("follower_count.txt", $FollowerCount);
         $this->WriteFile("current_stream_game.txt", $StreamInformation->game_name);
         $this->WriteFile("current_stream_title.txt", $StreamInformation->title);
         $this->WriteFile("current_stream_viewers.txt", $ViewerCount);

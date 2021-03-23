@@ -117,7 +117,7 @@ class TwitchHelixAPI
         }
         curl_close($ch);
 
-        $Result = json_decode($result)->data[0];
+        $Result = json_decode($result);
         if($Result) {
             return $Result;
         } else {
@@ -126,13 +126,23 @@ class TwitchHelixAPI
     }
 
     /**
-     * Get the latest followers from a specified userid
+     * Get the latest followers for a specified userid
      * @param int $UserID Target User ID
      * @return string Latest Follower-Username
      * @throws \Exception
      */
     public function GetUserLatestFollowerNameByUserID(int $UserID): string {
-        return $this->GetUserLatestFollowerByUserID($UserID)->from_name;
+        return $this->GetUserLatestFollowerByUserID($UserID)->data[0]->from_name;
+    }
+
+    /**
+     * Get the followers count for a specified userid
+     * @param int $UserID Target User ID
+     * @return int Follower Count
+     * @throws \Exception
+     */
+    public function GetUserFollowerCountByUserID(int $UserID): int {
+        return $this->GetUserLatestFollowerByUserID($UserID)->total;
     }
 
     /**
