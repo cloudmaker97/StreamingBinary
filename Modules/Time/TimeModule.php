@@ -1,5 +1,5 @@
 <?php
-namespace Modules;
+namespace Modules\Time;
 use Classes\Module;
 use Exception;
 

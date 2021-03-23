@@ -1,5 +1,5 @@
 <?php
-namespace Modules;
+namespace Modules\Song;
 use Classes\Module;
 use Helper\Output\OutputMessage;
 
