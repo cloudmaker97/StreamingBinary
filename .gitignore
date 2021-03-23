@@ -3,3 +3,4 @@ Output/*.txt
 Output/*.json
 Output/*/*.txt
 Output/*/*.json
+Config/Config.json
