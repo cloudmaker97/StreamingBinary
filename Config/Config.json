@@ -1,0 +1,11 @@
+{
+  "LastFM": {
+    "ClientSecret": "",
+    "Username": ""
+  },
+  "Twitch": {
+    "ClientID": "",
+    "ClientSecret": "",
+    "Username": ""
+  }
+}
