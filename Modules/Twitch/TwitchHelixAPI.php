@@ -1,6 +1,8 @@
 <?php
 namespace Modules\Twitch;
 
+use Helper\Output\OutputMessage;
+
 /**
  * Class TwitchHelixAPI
  * @package Modules\Twitch
@@ -153,6 +155,28 @@ class TwitchHelixAPI
             return $Result;
         } else {
             throw new \Exception("Failed request");
+        }
+    }
+
+    /**
+     * Get the stream viewer count
+     * @param int $UserID Target Stream User ID
+     * @return int Viewer Count
+     */
+    public function GetStreamViewerCountByUserID(int $UserID): int {
+        $ch = curl_init();
+        $AuthURL = sprintf('https://api.twitch.tv/helix/streams?user_id=%s', $UserID);
+        $this->SetDefaultCurlOptions($ch, $AuthURL);
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            throw new \Exception(curl_error($ch));
+        }
+        curl_close($ch);
+        $Result = json_decode($result)->data[0]->viewer_count;
+        if($Result) {
+            return $Result;
+        } else {
+            return 0;
         }
     }
 }
