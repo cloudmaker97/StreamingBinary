@@ -1,4 +1,4 @@
-# StreamingBin
+# StreamingBinary
 * Useful data exports for my Twitch Streaming needs
 * Completely without any external library / framework
 * Reports your issues please over this form: https://cloudmaker97.tk/support
