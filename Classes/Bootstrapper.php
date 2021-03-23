@@ -1,6 +1,6 @@
 <?php
 namespace Classes;
-use Configuration\ApplicationSecrets;
+use Configuration\ConfigurationLoader;
 use Helper\Output\OutputMessage;
 
 /**
@@ -70,9 +70,7 @@ class Bootstrapper extends Application {
         while($this->GetApplicationIsRunning()) {
             foreach ($this->Modules as $module) {
                 $module->OnIntervalUpdate($this->BundleConfigArguments());
-                OutputMessage::create(sprintf("Modul wurde erfolgreich aktualisiert: %s", $module->GetModuleName()));
             }
-            OutputMessage::create(sprintf("-- Alle Module wurden aktualisiert"));
             sleep(1);
         }
     }
@@ -85,12 +83,7 @@ class Bootstrapper extends Application {
     {
         return [
             'this' => $this,
-            'config' => [
-                "last_fm" => [
-                    "api_key" => ApplicationSecrets::GetLastFM_ApiKey(),
-                    "username" => ApplicationSecrets::GetLastFM_Username()
-                ]
-            ]
+            'config' => ConfigurationLoader::Create()->GetConfiguration()
         ];
     }
 }

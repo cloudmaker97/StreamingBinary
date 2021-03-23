@@ -1,6 +1,7 @@
 <?php
 namespace Modules\Song;
 use Classes\Module;
+use Configuration\ConfigurationLoader;
 use Helper\Output\OutputMessage;
 
 /**
@@ -14,9 +15,10 @@ class SongModule extends Module
         $this->SetModuleName("Songs");
         $this->SetOutputFolder("Song");
         $this->SetPlannedSkipCount(5);
+
         $this->SetSettings([
-            "API_Key" => $args["config"]["last_fm"]["api_key"],
-            "Username" => $args["config"]["last_fm"]["username"]
+            "API_Key" => $args["config"]->LastFM->ClientSecret,
+            "Username" => $args["config"]->LastFM->Username
         ]);
         $this->UpdateSongInformation();
     }
@@ -54,5 +56,6 @@ class SongModule extends Module
 
         $this->WriteJsonFile($SongData);
         $this->WriteTextFile($SongData);
+        OutputMessage::create("Die Song-Informationen wurden abgerufen", "Modules");
     }
 }

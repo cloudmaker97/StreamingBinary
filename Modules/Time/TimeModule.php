@@ -2,6 +2,7 @@
 namespace Modules\Time;
 use Classes\Module;
 use Exception;
+use Helper\Output\OutputMessage;
 
 class TimeModule extends Module
 {
@@ -40,5 +41,6 @@ class TimeModule extends Module
     {
         $this->SetCurrentTime();
         $this->WriteFile("current_time.txt", $this->GetShortTimeString()." Uhr");
+        OutputMessage::create("Die Zeit-Informationen wurden abgerufen", "Modules");
     }
 }

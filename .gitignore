@@ -1,2 +1,5 @@
 .idea
-Output/current_*
+Output/*.txt
+Output/*.json
+Output/*/*.txt
+Output/*/*.json
