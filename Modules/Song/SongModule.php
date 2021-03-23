@@ -12,6 +12,7 @@ class SongModule extends Module
     function OnInitialize($args): void
     {
         $this->SetModuleName("Songs");
+        $this->SetOutputFolder("Song");
         $this->SetPlannedSkipCount(5);
         $this->SetSettings([
             "API_Key" => $args["config"]["last_fm"]["api_key"],
@@ -28,12 +29,12 @@ class SongModule extends Module
     }
 
     private function WriteTextFile(array $SongData) {
-        file_put_contents(__DIR__."/../Output/current_song.txt", $SongData["SongTitle"]);
-        file_put_contents(__DIR__."/../Output/current_artist.txt", $SongData["ArtistTitle"]);
+        $this->WriteFile("current_song.txt", $SongData["SongTitle"]);
+        $this->WriteFile("current_artist.txt", $SongData["ArtistTitle"]);
     }
 
     private function WriteJsonFile(array $SongData) {
-        file_put_contents(__DIR__."/../Output/current_song.json", json_encode($SongData));
+        $this->WriteFile("current_song.json", json_encode($SongData));
     }
 
     private function UpdateSongInformation(): void

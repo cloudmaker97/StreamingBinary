@@ -30,6 +30,7 @@ class TimeModule extends Module
     function OnInitialize($args): void
     {
         $this->SetModuleName("Time");
+        $this->SetOutputFolder("Time");
     }
 
     /**
@@ -38,6 +39,6 @@ class TimeModule extends Module
     function OnIntervalUpdate($args): void
     {
         $this->SetCurrentTime();
-        file_put_contents(__DIR__."/../Output/current_time.txt", $this->GetShortTimeString()." Uhr");
+        $this->WriteFile("current_time.txt", $this->GetShortTimeString()." Uhr");
     }
 }

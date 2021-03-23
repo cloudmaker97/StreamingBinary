@@ -11,10 +11,13 @@ abstract class Module implements IModule
 {
     private string $_Name;
     private array $_Settings;
+    private $_OutputFolder = "";
     private int $_PlannedSkipCount = 0;
     private int $_AlreadySkippedCount = 0;
 
-    public function __construct() {}
+    public function __construct() {
+        $this->SetOutputFolder(__DIR__."/../Output/");
+    }
 
     /**
      * Set the planned skips for the current module
@@ -22,6 +25,28 @@ abstract class Module implements IModule
      */
     protected function SetPlannedSkipCount($SkipCount): void {
         $this->_PlannedSkipCount = $SkipCount;
+    }
+
+    /**
+     * Sets the output folder on initialization
+     * If output folder is defined, it sets the child folder in it
+     * @param $Folder string Set the folder within "Output"
+     */
+    public function SetOutputFolder($Folder) {
+        if($this->GetOutputFolder()) {
+            $this->_OutputFolder .= $Folder;
+        } else {
+            $this->_OutputFolder = $Folder;
+        }
+    }
+
+    /**
+     * Gets the current output folder for file writes
+     * @return string
+     */
+    public function GetOutputFolder(): string
+    {
+        return $this->_OutputFolder;
     }
 
     /**
@@ -113,6 +138,23 @@ abstract class Module implements IModule
     public function GetSettingsValue(string $Key)
     {
         return $this->_Settings[$Key];
+    }
+
+    /**
+     * Writes an file to a given output folder
+     * or writes it to an absolute path
+     * @param string $Filename Filename or absolute Path if $AbsolutPath is true
+     * @param string $Content Content of the file
+     * @param bool $Append Should it be appended?
+     * @param bool $AbsolutePath The filename is specified as absolute Path
+     */
+    public function WriteFile(string $Filename, string $Content, bool $Append=false, bool $AbsolutePath=false): void {
+        $FileWithPath = ($AbsolutePath === true ? $Filename : $this->GetOutputFolder()."/".$Filename);
+        if($Append === true) {
+            file_put_contents($FileWithPath, $Content, FILE_APPEND);
+        } else {
+            file_put_contents($FileWithPath, $Content);
+        }
     }
 
     /**
