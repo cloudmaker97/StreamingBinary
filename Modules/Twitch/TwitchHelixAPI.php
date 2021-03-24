@@ -182,9 +182,10 @@ class TwitchHelixAPI
             throw new \Exception(curl_error($ch));
         }
         curl_close($ch);
-        $Result = json_decode($result)->data[0]->viewer_count;
-        if($Result) {
-            return $Result;
+
+        $Result = json_decode($result)->data;
+        if($Result && array_key_exists(0, $Result)) {
+            return $Result[0]->viewer_count;
         } else {
             return 0;
         }
